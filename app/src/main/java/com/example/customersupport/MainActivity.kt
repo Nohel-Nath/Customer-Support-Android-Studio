@@ -20,6 +20,7 @@ import com.example.customersupport.databinding.ActivityMainBinding
 import java.io.File
 
 class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListener {
+    //this is check for newText branch
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomSheetDialogIssueType: BottomSheetDialogIssueType
     private lateinit var customBottomSheetDialog: BottomSheetDialogGallery
