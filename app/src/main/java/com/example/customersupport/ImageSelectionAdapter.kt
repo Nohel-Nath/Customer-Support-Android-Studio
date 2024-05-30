@@ -91,6 +91,7 @@ class ImageSelectionAdapter(
                 if (images.size == 0 || images.size == 5) View.GONE else View.VISIBLE
         }
     }
+    /////////////////////////////////////////////////////////
 
     private fun removeImage(position: Int) {
         if (position >= 0 && position < images.size) {
