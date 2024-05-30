@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">CustomerSupport</string>
+    <string name="trek_support">Trek Support</string>
+    <string name="get_support">Get Support</string>
+    <string name="email">Email Address</string>
+    <string name="example_gmail_com">example@gmail.com</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="_8801272340815">+8801272340815</string>
+    <string name="client_code">Client Code</string>
+    <string name="_657458">657458</string>
+    <string name="issue_type">Issue Type</string>
+    <string name="select_issue_type">Select Issue Type</string>
+    <string name="issue_description">Issue Description</string>
+    <string name="write_issue_description_here">Write Issue description here..</string>
+    <string name="attach_images_screenshots">Attach Images / screenshots</string>
+    <string name="upload_issue_images_max_5_images">Upload Issue Images (Max 5 Images)</string>
+    <string name="review">Review</string>
+    <string name="add_more">Add More</string>
+    <string name="select_issue_image">Select Issue Image</string>
+    <string name="gallery">Gallery</string>
+    <string name="access_to_your">Access to Your</string>
+    <string name="tap_to_allow">Tap to Allow</string>
+    <string name="screenshot">Screenshot\n</string>
+    <string name="_100">100</string>
+    <string name="_1">1</string>
+    <string name="all_photos">All Photos</string>
+    <string name="image_name">Image Name</string>
+    <string-array name="issue_name">
+        <item>"Hello 1"</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1"</item>
+        <item>"Hello 1</item>
+        <item>"Hello 1</item>
+    </string-array>
+</resources>

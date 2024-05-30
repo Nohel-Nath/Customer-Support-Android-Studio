@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/gallery_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center" />
+    <View
+        android:id="@+id/view_circle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/click"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="@id/gallery_item"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@id/gallery_item"
+        app:layout_constraintTop_toTopOf="@id/gallery_item" />
+    <View
+        android:id="@+id/view_selected_images"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/selected"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="@id/gallery_item"
+        app:layout_constraintHorizontal_bias="1"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@id/gallery_item"
+        app:layout_constraintTop_toTopOf="@id/gallery_item"
+        />
+    <TextView
+        android:id="@+id/tv_count_selected_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/view_selected_images"
+        app:layout_constraintEnd_toEndOf="@id/view_selected_images"
+        app:layout_constraintTop_toTopOf="@id/view_selected_images"
+        app:layout_constraintBottom_toBottomOf="@id/view_selected_images"
+        android:text="@string/_1"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

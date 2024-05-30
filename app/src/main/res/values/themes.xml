@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.CustomerSupport" parent="Theme.Material3.DayNight.NoActionBar">
+
+    </style>
+
+    <style name="Theme.CustomerSupport" parent="Base.Theme.CustomerSupport" />
+
+
+    <style name="DayNightTextColorStyle">
+        <item name="android:textColor">@color/black_day</item>
+    </style>
+    <style name="DayNightIssueViewColorStyle">
+        <item name="android:background">@color/white_view_day</item>
+    </style>
+    <style name="DayNightIssueTextColorStyle">
+        <item name="android:textColor">@color/black_day</item>
+    </style>
+    <style name="DayNightConstraintStyle">
+        <item name="android:textColor">@color/black_day</item>
+    </style>
+    <style name="DayNightEditTextStyle">
+        <item name="android:textColor">@color/gray_edit_text_day</item>
+    </style>
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
+
+
+</resources>

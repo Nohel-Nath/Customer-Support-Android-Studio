@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_22">22sp</dimen>
+    <dimen name="dp_335">335dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="sp_4">4sp</dimen>
+    <dimen name="margin_top_scroll">60dp</dimen>
+    <dimen name="margin_top_initial">60dp</dimen>
+    <dimen name="sp_9">9sp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="_17sp">17sp</dimen>
+    <dimen name="your_margin">5dp</dimen>
+    <dimen name="shapeable_image_width">57dp</dimen>
+    <dimen name="shapeable_image_height">57dp</dimen>
+    <dimen name="dp_8">16dp</dimen>
+    <dimen name="dp_64">57dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+</resources>
