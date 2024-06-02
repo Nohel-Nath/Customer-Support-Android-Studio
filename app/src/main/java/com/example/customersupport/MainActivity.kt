@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     private fun validateAndSubmitForm() {
         val issueType = binding.tvIssueTypeDialog.text.toString()
         val issueDescription = binding.editTextIssueDescription.text.toString()
-        val imagesAttached = adapter.itemCount > 0
+        val imagesAttached = images.size>0
 
         if(issueType.isEmpty())
         {
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             binding.tvErrorIssueDescription.visibility=View.GONE
         }
 
-        if(imagesAttached && adapter.itemCount==0)
+        if(!imagesAttached)
         {
             binding.tvErrorAttachedImages.visibility=View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
