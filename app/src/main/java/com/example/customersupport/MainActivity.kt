@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             binding.tvErrorIssueDescription.visibility=View.GONE
         }
 
-        if(!imagesAttached)
+        if(imagesAttached && adapter.itemCount==0)
         {
             binding.tvErrorAttachedImages.visibility=View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
