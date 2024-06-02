@@ -256,6 +256,22 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_issue_type" />
+                <TextView
+                    android:id="@+id/tv_error_issue_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tv_issue_type_dialog"
+                    app:layout_constraintEnd_toEndOf="@id/tv_issue_type_dialog"
+                    app:layout_constraintTop_toBottomOf="@id/tv_issue_type_dialog"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="@dimen/sp_4"
+                    android:textColor="#ff3333"
+                    android:textSize="13sp"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="3dp"
+                    android:visibility="gone"
+                    android:text="@string/please_fill_out_this_form"
+                    />
 
                 <TextView
                     android:id="@+id/tv_issue_description"
@@ -270,7 +286,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_issue_type_dialog" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_error_issue_type" />
 
                 <EditText
                     android:id="@+id/edit_text_issue_description"
@@ -289,6 +305,22 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_issue_description" />
+                <TextView
+                    android:id="@+id/tv_error_issue_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/edit_text_issue_description"
+                    app:layout_constraintEnd_toEndOf="@id/edit_text_issue_description"
+                    app:layout_constraintTop_toBottomOf="@id/edit_text_issue_description"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="@dimen/sp_4"
+                    android:textColor="#ff3333"
+                    android:textSize="13sp"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="3dp"
+                    android:visibility="gone"
+                    android:text="@string/please_fill_out_this_form"
+                    />
 
                 <TextView
                     android:id="@+id/tv_attach_images_screenshots"
@@ -303,7 +335,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edit_text_issue_description" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_error_issue_description" />
 
                 <View
                     android:id="@+id/view_for_images"
@@ -315,6 +347,22 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_attach_images_screenshots" />
+                <TextView
+                    android:id="@+id/tv_error_attached_images"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/edit_text_issue_description"
+                    app:layout_constraintEnd_toEndOf="@id/edit_text_issue_description"
+                    app:layout_constraintTop_toBottomOf="@id/view_for_images"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="@dimen/sp_4"
+                    android:textColor="#ff3333"
+                    android:textSize="13sp"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="3dp"
+                    android:visibility="gone"
+                    android:text="@string/please_fill_out_this_form"
+                    />
 
                 <TextView
                     android:id="@+id/tv_images"

@@ -7,9 +7,12 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityOptionsCompat
@@ -20,10 +23,6 @@ import com.example.customersupport.databinding.ActivityMainBinding
 import java.io.File
 
 class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListener {
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     private lateinit var binding: ActivityMainBinding
     // var p=10
     private lateinit var bottomSheetDialogIssueType: BottomSheetDialogIssueType
@@ -56,6 +55,10 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         }
         imageSelectionIssue()
         observeViewModel()
+
+        binding.btnReview.setSafeOnClickListener {
+            validateAndSubmitForm()
+        }
     }
 
     private fun observeViewModel() {
@@ -194,8 +197,49 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         customBottomSheetDialog.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == currentPermissionIndex) {
             currentPermissionIndex++
-            savePermissionIndex() // Save the updated permission index
+            savePermissionIndex()
             checkPermissionAndOpenGallery()
+        }
+    }
+
+    private fun validateAndSubmitForm() {
+        val issueType = binding.tvIssueTypeDialog.text.toString()
+        val issueDescription = binding.editTextIssueDescription.text.toString()
+        val imagesAttached = adapter.itemCount > 0
+
+        if(issueType.isEmpty())
+        {
+            binding.tvErrorIssueType.visibility=View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.tvErrorIssueType.visibility = View.GONE
+            }, 5000) // 2000 milliseconds = 2 seconds
+        } else{
+            binding.tvErrorIssueType.visibility=View.GONE
+        }
+
+        if(issueDescription.isEmpty())
+        {
+            binding.tvErrorIssueDescription.visibility=View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.tvErrorIssueDescription.visibility = View.GONE
+            }, 5000) // 2000 milliseconds = 2 seconds
+        } else{
+            binding.tvErrorIssueDescription.visibility=View.GONE
+        }
+
+        if(!imagesAttached)
+        {
+            binding.tvErrorAttachedImages.visibility=View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.tvErrorAttachedImages.visibility=View.GONE
+            },5000)
+        }
+        else{
+            binding.tvErrorAttachedImages.visibility=View.GONE
+        }
+
+        if (issueType.isNotEmpty() && issueDescription.isNotEmpty() && imagesAttached) {
+            Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
         }
     }
 }
