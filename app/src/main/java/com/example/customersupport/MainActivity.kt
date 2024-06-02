@@ -20,7 +20,12 @@ import com.example.customersupport.databinding.ActivityMainBinding
 import java.io.File
 
 class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListener {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     private lateinit var binding: ActivityMainBinding
+    // var p=10
     private lateinit var bottomSheetDialogIssueType: BottomSheetDialogIssueType
     private lateinit var customBottomSheetDialog: BottomSheetDialogGallery
     private lateinit var adapter: ImageSelectionAdapter
