@@ -82,6 +82,14 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
 
     fun updateTextView(issueText: String?) {
         binding.tvIssueTypeDialog.text = issueText ?: ""
+        Log.d("test for some field","$issueText")
+        if(issueText?.isNotEmpty()==true)
+        {
+            binding.tvErrorIssueType.visibility=View.GONE
+        }
+        else{
+            binding.tvErrorIssueType.visibility=View.VISIBLE
+        }
     }
 
     private fun maskGroupingHeight() {
@@ -146,6 +154,11 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             supportViewModel.updateImagesForIssue(newImages)
             //adapter.updateImages(newImages)
             adapter.notifyDataSetChanged()
+            if(images.size==0){
+                binding.tvErrorAttachedImages.visibility=View.VISIBLE
+            }else{
+                binding.tvErrorAttachedImages.visibility=View.GONE
+            }
             updateUiVisibility(newImages)
         } else {
             updateUiVisibility(emptyList())
