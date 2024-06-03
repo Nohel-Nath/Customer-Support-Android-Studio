@@ -265,6 +265,8 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             binding.tvErrorAttachedImages.visibility=View.GONE
         }
 
+        //this is test message
+
         if (issueType.isNotEmpty() && issueDescription.isNotEmpty() && imagesAttached) {
             //Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
             showCustomDialog()
