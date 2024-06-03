@@ -206,6 +206,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         val issueType = binding.tvIssueTypeDialog.text.toString()
         val issueDescription = binding.editTextIssueDescription.text.toString()
         val imagesAttached = images.size>0
+        Log.d("ItemCountLog", "Ad: ${images.size}")
 
         if(issueType.isEmpty())
         {
@@ -242,6 +243,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
         }
     }
+
 }
 //            val newImages = imagePaths.map { ImageSelectionDataClass(it) }
 //            adapter.updateImages(newImages)
