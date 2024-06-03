@@ -212,9 +212,9 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         if(issueType.isEmpty())
         {
             binding.tvErrorIssueType.visibility=View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.tvErrorIssueType.visibility = View.GONE
-            }, 5000) // 2000 milliseconds = 2 seconds
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                binding.tvErrorIssueType.visibility = View.GONE
+//            }, 5000) // 2000 milliseconds = 2 seconds
         } else{
             binding.tvErrorIssueType.visibility=View.GONE
         }
@@ -222,9 +222,9 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         if(issueDescription.isEmpty())
         {
             binding.tvErrorIssueDescription.visibility=View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.tvErrorIssueDescription.visibility = View.GONE
-            }, 5000) // 2000 milliseconds = 2 seconds
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                binding.tvErrorIssueDescription.visibility = View.GONE
+//            }, 5000) // 2000 milliseconds = 2 seconds
         } else{
             binding.tvErrorIssueDescription.visibility=View.GONE
         }
@@ -232,9 +232,9 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         if(!imagesAttached)
         {
             binding.tvErrorAttachedImages.visibility=View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.tvErrorAttachedImages.visibility=View.GONE
-            },5000)
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                binding.tvErrorAttachedImages.visibility=View.GONE
+//            },5000)
         }
         else{
             binding.tvErrorAttachedImages.visibility=View.GONE
