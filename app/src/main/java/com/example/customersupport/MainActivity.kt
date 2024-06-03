@@ -244,6 +244,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
         }
     }
+    //NewtextBranch
 
 }
 //            val newImages = imagePaths.map { ImageSelectionDataClass(it) }
