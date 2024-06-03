@@ -246,6 +246,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     }
     //NewtextBranch
     // new text for pull
+    //hello
 
 }
 //            val newImages = imagePaths.map { ImageSelectionDataClass(it) }
