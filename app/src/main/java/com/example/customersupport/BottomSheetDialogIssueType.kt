@@ -95,6 +95,10 @@ class BottomSheetDialogIssueType(private val context: Context,private val issueV
             }
         }
     }
+    fun updateIssueText(issueText: String?) {
+        // Update the issue text in your dialog UI here
+        //do nothing
+    }
 }
 
 //val issueList = resources.getStringArray(R.array.issue_name

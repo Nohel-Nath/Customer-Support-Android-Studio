@@ -26,6 +26,9 @@
     <string name="_1">1</string>
     <string name="all_photos">All Photos</string>
     <string name="image_name">Image Name</string>
+    <string name="request_received">Request Received</string>
+    <string name="your_deposit_request_has_been_received_you_will_be_notified_once_we_verify_and_add_the_fund_to_your_buying_power">Your deposit request has been received. You will be notified once we verify and add the fund to your Buying Power.</string>
+    <string name="okay">Okay</string>
     <string-array name="issue_name">
         <item>"Hello 1"</item>
         <item>"Hello 1"</item>

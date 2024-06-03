@@ -2,37 +2,42 @@ package com.example.customersupport
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.customersupport.databinding.ActivityMainBinding
 import java.io.File
 
+@SuppressLint("NotifyDataSetChanged")
 class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListener {
 
     private lateinit var binding: ActivityMainBinding
-    // var p=10
     private lateinit var bottomSheetDialogIssueType: BottomSheetDialogIssueType
     private lateinit var customBottomSheetDialog: BottomSheetDialogGallery
     private lateinit var adapter: ImageSelectionAdapter
     private val images = mutableListOf<ImageSelectionDataClass>()
     private var currentPermissionIndex = 0
+
     private val storagePermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         Manifest.permission.READ_MEDIA_IMAGES
     } else {
@@ -59,7 +64,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         ediTextIssueDescription()
         imageSelectionIssue()
         observeViewModel()
-
         binding.btnReview.setSafeOnClickListener {
             validateAndSubmitForm()
         }
@@ -70,23 +74,18 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // do nothing
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(s?.isNotEmpty()==true)
                 {
                     binding.tvErrorIssueDescription.visibility=View.GONE
-                }else{
-                    binding.tvErrorIssueDescription.visibility=View.VISIBLE
                 }
             }
-
             override fun afterTextChanged(s: Editable?) {
                 // do nothing
             }
 
         })
     }
-
     private fun observeViewModel() {
         supportViewModel.selectedIssue.observe(this, Observer { issue ->
             updateTextView(issue?.issueType)
@@ -97,14 +96,12 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             updateUiVisibility(image)
         })
     }
-
     private fun bottomSheetDialogIssueInitialize() {
         bottomSheetDialogIssueType = BottomSheetDialogIssueType(this, supportViewModel)
         binding.tvIssueTypeDialog.setSafeOnClickListener {
             bottomSheetDialogIssueType.openIssueDialog(binding.tvIssueTypeDialog)
         }
     }
-
     fun updateTextView(issueText: String?) {
         binding.tvIssueTypeDialog.text = issueText ?: ""
         Log.d("test for some field","$issueText")
@@ -116,7 +113,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             binding.tvErrorIssueType.visibility=View.VISIBLE
         }
     }
-
     private fun maskGroupingHeight() {
         val parentLayout =
             findViewById<View>(android.R.id.content) // or any other parent view you have
@@ -144,7 +140,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
 
                 override fun updatedImg(images: MutableList<ImageSelectionDataClass>) {
                     customBottomSheetDialog.updateSelectedImageGallery(images)
-                    Log.d("current Image Size --", "${images.size}")
+                    //Log.d("current Image Size --", "${images.size}")
                 }
 
                 override fun sendSingleImage(
@@ -179,7 +175,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             supportViewModel.updateImagesForIssue(newImages)
             //adapter.updateImages(newImages)
             adapter.notifyDataSetChanged()
-            if(images.size==0){
+            if(imagePaths.isEmpty()){
                 binding.tvErrorAttachedImages.visibility=View.VISIBLE
             }else{
                 binding.tvErrorAttachedImages.visibility=View.GONE
@@ -245,14 +241,11 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         val issueType = binding.tvIssueTypeDialog.text.toString()
         val issueDescription = binding.editTextIssueDescription.text.toString()
         val imagesAttached = images.size>0
-        Log.d("ItemCountLog", "Ad: ${images.size}")
+        //Log.d("ItemCountLog", "Ad: ${images.size}")
 
         if(issueType.isEmpty())
         {
             binding.tvErrorIssueType.visibility=View.VISIBLE
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                binding.tvErrorIssueType.visibility = View.GONE
-//            }, 5000) // 2000 milliseconds = 2 seconds
         } else{
             binding.tvErrorIssueType.visibility=View.GONE
         }
@@ -260,9 +253,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         if(issueDescription.isEmpty())
         {
             binding.tvErrorIssueDescription.visibility=View.VISIBLE
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                binding.tvErrorIssueDescription.visibility = View.GONE
-//            }, 5000) // 2000 milliseconds = 2 seconds
         } else{
             binding.tvErrorIssueDescription.visibility=View.GONE
         }
@@ -270,23 +260,61 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         if(!imagesAttached)
         {
             binding.tvErrorAttachedImages.visibility=View.VISIBLE
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                binding.tvErrorAttachedImages.visibility=View.GONE
-//            },5000)
         }
         else{
             binding.tvErrorAttachedImages.visibility=View.GONE
         }
 
         if (issueType.isNotEmpty() && issueDescription.isNotEmpty() && imagesAttached) {
-            Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
+            showCustomDialog()
+            binding.tvIssueTypeDialog.text = ""
+
+            binding.tvIssueTypeDialog.clearComposingText()
+            bottomSheetDialogIssueType.updateIssueText("")
+            binding.editTextIssueDescription.text.clear()
+            images.clear()
+            adapter.notifyDataSetChanged()
+            customBottomSheetDialog.updateSelectedImageGallery(images)
+            binding.viewForImages.visibility = View.VISIBLE
+            binding.tvImages.visibility = View.VISIBLE
+            binding.tvImagesUpload.visibility = View.VISIBLE
+            //Log.d("ItemCountLog", "Images after clear: ${images.size}")
         }
     }
-    //NewtextBranch
-    // new text for pull
-    //hello
+    private fun showCustomDialog() {
 
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.custom_dialog_box)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        //dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.custome_dialog_bg))
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.findViewById<Button>(R.id.btn_okay).setSafeOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCancelable(false)
+        dialog.show()
+    }
 }
+
 //            val newImages = imagePaths.map { ImageSelectionDataClass(it) }
 //            adapter.updateImages(newImages)
 //            adapter.notifyDataSetChanged()
+
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                binding.tvErrorIssueType.visibility = View.GONE
+//            }, 5000) // 2000 milliseconds = 2 seconds
+
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                binding.tvErrorIssueDescription.visibility = View.GONE
+//            }, 5000) // 2000 milliseconds = 2 seconds
+
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                binding.tvErrorAttachedImages.visibility=View.GONE
+//            },5000)
+
+//binding.btnReview.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorEnabled)))
+//dialog.window?.setLayout(
+//ViewGroup.LayoutParams.WRAP_CONTENT,
+//resources.getDimensionPixelSize(R.dimen.dp_287)
+//)
