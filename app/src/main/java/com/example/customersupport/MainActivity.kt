@@ -206,7 +206,8 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     private fun validateAndSubmitForm() {
         val issueType = binding.tvIssueTypeDialog.text.toString()
         val issueDescription = binding.editTextIssueDescription.text.toString()
-        val imagesAttached = adapter.itemCount > 0
+        val imagesAttached = images.size>0
+        Log.d("ItemCountLog", "Ad: ${images.size}")
 
         if(issueType.isEmpty())
         {
@@ -227,24 +228,23 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         } else{
             binding.tvErrorIssueDescription.visibility=View.GONE
         }
-        //bug has to be fixed
-        if (!imagesAttached) {
-            binding.tvErrorAttachedImages.visibility = View.VISIBLE
+
+        if(!imagesAttached)
+        {
+            binding.tvErrorAttachedImages.visibility=View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
-                binding.tvErrorAttachedImages.visibility = View.GONE
-            }, 5000) // 5000 milliseconds = 5 seconds
-        } else {
-            binding.tvErrorAttachedImages.visibility = View.GONE
+                binding.tvErrorAttachedImages.visibility=View.GONE
+            },5000)
+        }
+        else{
+            binding.tvErrorAttachedImages.visibility=View.GONE
         }
 
         if (issueType.isNotEmpty() && issueDescription.isNotEmpty() && imagesAttached) {
             Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
         }
     }
-    //new-merge
-    //for merging this branch
-    //ahnjeunjacja
-    //ahcjejchba
+
 }
 //            val newImages = imagePaths.map { ImageSelectionDataClass(it) }
 //            adapter.updateImages(newImages)
