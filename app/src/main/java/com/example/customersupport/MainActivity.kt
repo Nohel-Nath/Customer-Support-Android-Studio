@@ -241,6 +241,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
         }
     }
+    //new-merge
 }
 //            val newImages = imagePaths.map { ImageSelectionDataClass(it) }
 //            adapter.updateImages(newImages)
