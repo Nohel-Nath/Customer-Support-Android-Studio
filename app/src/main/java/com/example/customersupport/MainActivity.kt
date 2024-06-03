@@ -242,6 +242,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         }
     }
     //new-merge
+    //for merging this branch
 }
 //            val newImages = imagePaths.map { ImageSelectionDataClass(it) }
 //            adapter.updateImages(newImages)
