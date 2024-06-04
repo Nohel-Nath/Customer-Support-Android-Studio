@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     private lateinit var adapter: ImageSelectionAdapter
     private val images = mutableListOf<ImageSelectionDataClass>()
     private var currentPermissionIndex = 0
+    private var issueText: String? = null
 
     private val storagePermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         Manifest.permission.READ_MEDIA_IMAGES
@@ -68,8 +69,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             validateAndSubmitForm()
         }
     }
-    private fun ediTextIssueDescription()
-    {
+    private fun ediTextIssueDescription() {
         binding.editTextIssueDescription.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // do nothing
@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             override fun afterTextChanged(s: Editable?) {
                 // do nothing
             }
-
         })
     }
     private fun observeViewModel() {
@@ -102,7 +101,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             bottomSheetDialogIssueType.openIssueDialog(binding.tvIssueTypeDialog)
         }
     }
-    fun updateTextView(issueText: String?) {
+    fun updateTextView(issueText:String?) {
         binding.tvIssueTypeDialog.text = issueText ?: ""
         Log.d("test for some field","$issueText")
         if(issueText?.isNotEmpty()==true)
@@ -112,6 +111,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         else{
             binding.tvErrorIssueType.visibility=View.VISIBLE
         }
+        this.issueText=issueText
     }
     private fun maskGroupingHeight() {
         val parentLayout =
@@ -173,10 +173,10 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
                 ImageSelectionDataClass(it, imageName)
             }
             supportViewModel.updateImagesForIssue(newImages)
-            //adapter.updateImages(newImages)
             adapter.notifyDataSetChanged()
             if(imagePaths.isEmpty()){
                 binding.tvErrorAttachedImages.visibility=View.VISIBLE
+
             }else{
                 binding.tvErrorAttachedImages.visibility=View.GONE
             }
@@ -241,7 +241,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         val issueType = binding.tvIssueTypeDialog.text.toString()
         val issueDescription = binding.editTextIssueDescription.text.toString()
         val imagesAttached = images.size>0
-        //Log.d("ItemCountLog", "Ad: ${images.size}")
 
         if(issueType.isEmpty())
         {
@@ -264,18 +263,17 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         else{
             binding.tvErrorAttachedImages.visibility=View.GONE
         }
-
+        //this is again a message
         if (issueType.isNotEmpty() && issueDescription.isNotEmpty() && imagesAttached) {
             //Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
             showCustomDialog()
             binding.tvIssueTypeDialog.text = ""
-
-            binding.tvIssueTypeDialog.clearComposingText()
-            bottomSheetDialogIssueType.updateIssueText("")
+            bottomSheetDialogIssueType.updateIssueText(null)
             binding.editTextIssueDescription.text.clear()
             images.clear()
             adapter.notifyDataSetChanged()
             customBottomSheetDialog.updateSelectedImageGallery(images)
+            supportViewModel.updateImagesForIssue(images)
             binding.viewForImages.visibility = View.VISIBLE
             binding.tvImages.visibility = View.VISIBLE
             binding.tvImagesUpload.visibility = View.VISIBLE
@@ -283,7 +281,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         }
     }
     private fun showCustomDialog() {
-
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.custom_dialog_box)
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)

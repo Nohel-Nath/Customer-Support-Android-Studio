@@ -1,5 +1,6 @@
 package com.example.customersupport
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -42,13 +43,13 @@ class BottomSheetDialogIssueType(private val context: Context,private val issueV
         }) // Pass selectedPosition here
         //selectedPosition=null
         val dummyData = listOf(
-            IssueDataClass("Hello 1"),
-            IssueDataClass("Hello 2"),
-            IssueDataClass("Hello 3"),
-            IssueDataClass("Hello 4"),
-            IssueDataClass("Hello 5"),
-            IssueDataClass("Hello 6"),
-            IssueDataClass("Hello 7"),
+            IssueDataClass("Trading"),
+            IssueDataClass("Deposit"),
+            IssueDataClass("Withdrawal"),
+            IssueDataClass("BO A/C creation"),
+            IssueDataClass("Change BO A/C Information"),
+            IssueDataClass("Wrong Information"),
+            IssueDataClass("Others"),
             IssueDataClass("Hello 8"),
             IssueDataClass("Hello 9"),
             IssueDataClass("Hello 10"),
@@ -95,9 +96,14 @@ class BottomSheetDialogIssueType(private val context: Context,private val issueV
             }
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun updateIssueText(issueText: String?) {
         // Update the issue text in your dialog UI here
         //do nothing
+        selectedPosition = null
+        adapter.notifyDataSetChanged() // Refresh entire dataset to clear selection
+
+        updateButtonColor(null)
     }
 }
 
