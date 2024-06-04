@@ -13,6 +13,20 @@ class SupportViewModel : ViewModel() {
         MutableLiveData<MutableList<ImageSelectionDataClass>>(mutableListOf())
     val imageSelectedIssue: LiveData<MutableList<ImageSelectionDataClass>> get() = _imagesSelectedIssue
 
+    private val _selectedPosition = MutableLiveData<Int?>()
+    val selectedPosition: LiveData<Int?> get() = _selectedPosition
+
+    fun selectPosition(position: Int?) {
+        _selectedPosition.value = position
+    }
+
+    fun selectIssue(issue: IssueDataClass?) {
+        _selectedIssue.value = issue
+    }
+    fun updateIssue(issue: IssueDataClass?){
+        _selectedIssue.value=null
+    }
+
     fun updateImagesForIssue(newImages: List<ImageSelectionDataClass>) {
         _imagesSelectedIssue.value = newImages.toMutableList()
     }
@@ -35,7 +49,5 @@ class SupportViewModel : ViewModel() {
         images.value = newImages
     }
 
-    fun selectIssue(issue: IssueDataClass?) {
-        _selectedIssue.value = issue
-    }
+
 }

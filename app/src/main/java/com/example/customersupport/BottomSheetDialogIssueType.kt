@@ -12,7 +12,10 @@ import com.example.customersupport.databinding.BottomLayoutIssueTypeBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class BottomSheetDialogIssueType(private val context: Context,private val issueViewModel: SupportViewModel) {
+class BottomSheetDialogIssueType(
+    private val context: Context,
+    private val issueViewModel: SupportViewModel
+) {
     private lateinit var binding: BottomLayoutIssueTypeBinding
     private var dialog: BottomSheetDialog? = null
     private lateinit var adapter: IssueAdapter
@@ -30,26 +33,33 @@ class BottomSheetDialogIssueType(private val context: Context,private val issueV
         dialog?.behavior?.isDraggable = false
         dialog?.show()
         dialog?.setCancelable(false)
-        adapter = IssueAdapter(selectedPosition, object : IssueAdapter.OnItemClickListener {
+        adapter = IssueAdapter(issueViewModel.selectedPosition.value, object : IssueAdapter.OnItemClickListener {
             override fun onClickItem(issueText: String?) {
                 selectedPosition = adapter.getSelectedItem()
+                issueViewModel.selectPosition(selectedPosition)
+                Log.d("test for some field for selected position", "$selectedPosition")
                 // Update UI according to the selected item
                 updateButtonColor(issueText)
                 selectedPosition?.let {
                     adapter.notifyItemChanged(it)
                 }
-                issueViewModel.selectIssue(if (selectedPosition != null) IssueDataClass(issueText ?: "") else null)
+                issueViewModel.selectIssue(
+                    if (selectedPosition != null) IssueDataClass(
+                        issueText ?: ""
+                    ) else null
+                )
             }
         }) // Pass selectedPosition here
         //selectedPosition=null
+        //issueViewModel.selectPosition(null)
         val dummyData = listOf(
-            IssueDataClass("Trading"),
-            IssueDataClass("Deposit"),
-            IssueDataClass("Withdrawal"),
-            IssueDataClass("BO A/C creation"),
-            IssueDataClass("Change BO A/C Information"),
-            IssueDataClass("Wrong Information"),
-            IssueDataClass("Others"),
+            IssueDataClass("Hello 1"),
+            IssueDataClass("Hello 1"),
+            IssueDataClass("Hello 1"),
+            IssueDataClass("Hello 1"),
+            IssueDataClass("Hello 1"),
+            IssueDataClass("Hello 1"),
+            IssueDataClass("Hello 7"),
             IssueDataClass("Hello 8"),
             IssueDataClass("Hello 9"),
             IssueDataClass("Hello 10"),
@@ -67,7 +77,7 @@ class BottomSheetDialogIssueType(private val context: Context,private val issueV
         adapter.submitIssueClass(dummyData)
         binding.recycleViewIssueType.adapter = adapter
         updateButtonColor(null)
-        selectedPosition?.let { position ->
+        issueViewModel.selectedPosition.value?.let { position ->
             binding.recycleViewIssueType.post {
                 (binding.recycleViewIssueType.layoutManager as LinearLayoutManager)
                     .scrollToPositionWithOffset(position, 0)
@@ -76,34 +86,43 @@ class BottomSheetDialogIssueType(private val context: Context,private val issueV
     }
 
     private fun updateButtonColor(issueText: String?) {
-        if (issueText == null && selectedPosition == null) {
-            binding.btnDone.setTextColor(Color.parseColor("#80ffffff"))
-            binding.btnDone.backgroundTintList =
-                ColorStateList.valueOf(Color.parseColor("#090909"))
-            Log.d("Message", "it works")
-        } else {
-            binding.btnDone.setTextColor(Color.parseColor("#090909"))
-            binding.btnDone.backgroundTintList =
-                ColorStateList.valueOf(Color.parseColor("#00C806"))
-            Log.d("Message", "it working")
-        }
-        binding.btnDone.setSafeOnClickListener{
-            if (selectedPosition != null) {
-                dialog?.dismiss()
+        if (issueText == null && issueViewModel.selectedPosition.value == null) {
+            if(::binding.isInitialized) {
+                binding.btnDone.setTextColor(Color.parseColor("#80ffffff"))
+                binding.btnDone.backgroundTintList =
+                    ColorStateList.valueOf(Color.parseColor("#090909"))
+                Log.d("Message", "it works")
             }
-            if (selectedPosition != null && issueText != null) {
-                (context as? MainActivity)?.updateTextView(issueText)
+        } else {
+            if(::binding.isInitialized) {
+                binding.btnDone.setTextColor(Color.parseColor("#090909"))
+                binding.btnDone.backgroundTintList =
+                    ColorStateList.valueOf(Color.parseColor("#00C806"))
+                Log.d("Message", "it working")
+            }
+        }
+        if(::binding.isInitialized) {
+            binding.btnDone.setSafeOnClickListener {
+                if (issueViewModel.selectedPosition.value != null) {
+                    dialog?.dismiss()
+                }
+                if (issueViewModel.selectedPosition.value != null && issueText != null) {
+                    (context as? MainActivity)?.updateTextView(issueText)
+                }
+
             }
         }
     }
+
     @SuppressLint("NotifyDataSetChanged")
     fun updateIssueText(issueText: String?) {
-        // Update the issue text in your dialog UI here
-        //do nothing
         selectedPosition = null
-        adapter.notifyDataSetChanged() // Refresh entire dataset to clear selection
-
-        updateButtonColor(null)
+        if (::adapter.isInitialized){
+            adapter.notifyDataSetChanged()
+        }
+        if(::binding.isInitialized) {
+            updateButtonColor(null)
+        }
     }
 }
 

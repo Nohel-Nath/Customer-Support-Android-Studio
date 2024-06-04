@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomSheetDialogIssueType: BottomSheetDialogIssueType
     private lateinit var customBottomSheetDialog: BottomSheetDialogGallery
-    private lateinit var adapter: ImageSelectionAdapter
+    private lateinit var imageAdapter: ImageSelectionAdapter
     private val images = mutableListOf<ImageSelectionDataClass>()
     private var currentPermissionIndex = 0
-    private var issueText: String? = null
+
 
     private val storagePermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         Manifest.permission.READ_MEDIA_IMAGES
@@ -69,50 +69,54 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
             validateAndSubmitForm()
         }
     }
+
     private fun ediTextIssueDescription() {
-        binding.editTextIssueDescription.addTextChangedListener(object:TextWatcher{
+        binding.editTextIssueDescription.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // do nothing
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s?.isNotEmpty()==true)
-                {
-                    binding.tvErrorIssueDescription.visibility=View.GONE
+                if (s?.isNotEmpty() == true) {
+                    binding.tvErrorIssueDescription.visibility = View.GONE
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {
                 // do nothing
             }
         })
     }
+
     private fun observeViewModel() {
         supportViewModel.selectedIssue.observe(this, Observer { issue ->
             updateTextView(issue?.issueType)
         })
         supportViewModel.imageSelectedIssue.observe(this, Observer { image ->
-            adapter.updateImages(image)
+            imageAdapter.updateImages(image)
             customBottomSheetDialog.updateSelectedImageGallery(image)
             updateUiVisibility(image)
         })
     }
+
     private fun bottomSheetDialogIssueInitialize() {
         bottomSheetDialogIssueType = BottomSheetDialogIssueType(this, supportViewModel)
         binding.tvIssueTypeDialog.setSafeOnClickListener {
             bottomSheetDialogIssueType.openIssueDialog(binding.tvIssueTypeDialog)
         }
     }
-    fun updateTextView(issueText:String?) {
+
+    fun updateTextView(issueText: String?) {
         binding.tvIssueTypeDialog.text = issueText ?: ""
-        Log.d("test for some field","$issueText")
-        if(issueText?.isNotEmpty()==true)
-        {
-            binding.tvErrorIssueType.visibility=View.GONE
+        Log.d("test for some field", "$issueText")
+        if (issueText?.isNotEmpty() == true) {
+            binding.tvErrorIssueType.visibility = View.GONE
+        } else {
+            supportViewModel.updateIssue(null)
+            binding.tvErrorIssueType.visibility = View.VISIBLE
         }
-        else{
-            binding.tvErrorIssueType.visibility=View.VISIBLE
-        }
-        this.issueText=issueText
     }
+
     private fun maskGroupingHeight() {
         val parentLayout =
             findViewById<View>(android.R.id.content) // or any other parent view you have
@@ -126,7 +130,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     private fun imageSelectionIssue() {
         binding.rvImage.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        adapter = ImageSelectionAdapter(supportViewModel, images,
+        imageAdapter = ImageSelectionAdapter(supportViewModel, images,
             object : ImageSelectionAdapter.OnItemClickListener {
                 override fun onItemClick() {
                     customBottomSheetDialog.openCameraGalleryDialog()
@@ -159,7 +163,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
                     startActivity(intent, option.toBundle())
                 }
             })
-        binding.rvImage.adapter = adapter
+        binding.rvImage.adapter = imageAdapter
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.dp_4) // Convert dp to pixels
         binding.rvImage.addItemDecoration(HorizontalSpaceItemDecoration(spacingInPixels))
     }
@@ -173,12 +177,12 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
                 ImageSelectionDataClass(it, imageName)
             }
             supportViewModel.updateImagesForIssue(newImages)
-            adapter.notifyDataSetChanged()
-            if(imagePaths.isEmpty()){
-                binding.tvErrorAttachedImages.visibility=View.VISIBLE
+            imageAdapter.notifyDataSetChanged()
+            if (imagePaths.isEmpty()) {
+                binding.tvErrorAttachedImages.visibility = View.VISIBLE
 
-            }else{
-                binding.tvErrorAttachedImages.visibility=View.GONE
+            } else {
+                binding.tvErrorAttachedImages.visibility = View.GONE
             }
             updateUiVisibility(newImages)
         } else {
@@ -240,50 +244,54 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     private fun validateAndSubmitForm() {
         val issueType = binding.tvIssueTypeDialog.text.toString()
         val issueDescription = binding.editTextIssueDescription.text.toString()
-        val imagesAttached = images.size>0
+        val imagesAttached = images.size > 0
 
-        if(issueType.isEmpty())
-        {
-            binding.tvErrorIssueType.visibility=View.VISIBLE
-        } else{
-            binding.tvErrorIssueType.visibility=View.GONE
-        }
-
-        if(issueDescription.isEmpty())
-        {
-            binding.tvErrorIssueDescription.visibility=View.VISIBLE
-        } else{
-            binding.tvErrorIssueDescription.visibility=View.GONE
+        if (issueType.isEmpty()) {
+            binding.tvErrorIssueType.visibility = View.VISIBLE
+        } else {
+            binding.tvErrorIssueType.visibility = View.GONE
         }
 
-        if(!imagesAttached)
-        {
-            binding.tvErrorAttachedImages.visibility=View.VISIBLE
+        if (issueDescription.isEmpty()) {
+            binding.tvErrorIssueDescription.visibility = View.VISIBLE
+        } else {
+            binding.tvErrorIssueDescription.visibility = View.GONE
         }
-        else{
-            binding.tvErrorAttachedImages.visibility=View.GONE
+
+        if (!imagesAttached) {
+            binding.tvErrorAttachedImages.visibility = View.VISIBLE
+        } else {
+            binding.tvErrorAttachedImages.visibility = View.GONE
         }
-        //this is again a message
+
         if (issueType.isNotEmpty() && issueDescription.isNotEmpty() && imagesAttached) {
-            //Toast.makeText(this, "Submitted", Toast.LENGTH_LONG).show()
+
             showCustomDialog()
+
             binding.tvIssueTypeDialog.text = ""
             bottomSheetDialogIssueType.updateIssueText(null)
+            supportViewModel.selectPosition(null)
+
             binding.editTextIssueDescription.text.clear()
             images.clear()
-            adapter.notifyDataSetChanged()
+            imageAdapter.notifyDataSetChanged()
             customBottomSheetDialog.updateSelectedImageGallery(images)
             supportViewModel.updateImagesForIssue(images)
+
             binding.viewForImages.visibility = View.VISIBLE
             binding.tvImages.visibility = View.VISIBLE
             binding.tvImagesUpload.visibility = View.VISIBLE
-            //Log.d("ItemCountLog", "Images after clear: ${images.size}")
+
         }
     }
+
     private fun showCustomDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.custom_dialog_box)
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         //dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.custome_dialog_bg))
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.findViewById<Button>(R.id.btn_okay).setSafeOnClickListener {
