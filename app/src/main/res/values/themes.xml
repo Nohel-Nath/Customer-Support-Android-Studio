@@ -26,6 +26,18 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">6dp</item>
     </style>
-
+    <style name="customDialogBox">
+        <item name="android:color">@color/white</item>
+    </style>
+    <style name="YourDepositRequest">
+        <item name="android:textColor">@color/black_day</item>
+    </style>
+    <style name="addMore">
+        <item name="android:color">@color/black_day</item>
+    </style>
+    <style name="btnReview">
+        <item name="android:backgroundTint">@color/reviewBgDay</item>
+        <item name="android:textColor">@color/reviewTxtDay</item>
+    </style>
 
 </resources>

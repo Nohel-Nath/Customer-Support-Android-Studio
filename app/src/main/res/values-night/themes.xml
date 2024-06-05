@@ -21,6 +21,18 @@
     <style name="DayNightEditTextStyle">
         <item name="android:textColor">@color/black_edit_text_night</item>
     </style>
-
+    <style name="customDialogBox">
+        <item name="android:color">@color/colorBlackDialog</item>
+    </style>
+    <style name="YourDepositRequest">
+        <item name="android:textColor">@color/white_view_day</item>
+    </style>
+    <style name="addMore">
+        <item name="android:textColor">@color/colorAddMore</item>
+    </style>
+    <style name="btnReview">
+        <item name="android:backgroundTint">@color/reviewBgNight</item>
+        <item name="android:textColor">@color/reviewTxtNight</item>
+    </style>
 
 </resources>

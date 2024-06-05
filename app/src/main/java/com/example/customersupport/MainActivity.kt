@@ -100,7 +100,11 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     }
 
     private fun bottomSheetDialogIssueInitialize() {
-        bottomSheetDialogIssueType = BottomSheetDialogIssueType(this, supportViewModel)
+        //bottomSheetDialogIssueType = BottomSheetDialogIssueType(this, supportViewModel)
+        bottomSheetDialogIssueType = BottomSheetDialogIssueType(this, supportViewModel.selectedPosition.value) { (issueText, position) ->
+            supportViewModel.selectIssue(issueText?.let { IssueDataClass(it) })
+            supportViewModel.selectPosition(position)
+        }
         binding.tvIssueTypeDialog.setSafeOnClickListener {
             bottomSheetDialogIssueType.openIssueDialog(binding.tvIssueTypeDialog)
         }
@@ -108,11 +112,15 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
 
     fun updateTextView(issueText: String?) {
         binding.tvIssueTypeDialog.text = issueText ?: ""
-        Log.d("test for some field", "$issueText")
+
+        //Log.d("test for some field", "$issueText")
         if (issueText?.isNotEmpty() == true) {
             binding.tvErrorIssueType.visibility = View.GONE
         } else {
-            supportViewModel.updateIssue(null)
+//            supportViewModel.updateIssue(null)
+//            supportViewModel.selectIssue(null)
+            supportViewModel.selectIssue(IssueDataClass("Select Issue Type"))
+            supportViewModel.selectPosition(null)
             binding.tvErrorIssueType.visibility = View.VISIBLE
         }
     }
@@ -268,19 +276,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
 
             showCustomDialog()
 
-            binding.tvIssueTypeDialog.text = ""
-            bottomSheetDialogIssueType.updateIssueText(null)
-            supportViewModel.selectPosition(null)
 
-            binding.editTextIssueDescription.text.clear()
-            images.clear()
-            imageAdapter.notifyDataSetChanged()
-            customBottomSheetDialog.updateSelectedImageGallery(images)
-            supportViewModel.updateImagesForIssue(images)
-
-            binding.viewForImages.visibility = View.VISIBLE
-            binding.tvImages.visibility = View.VISIBLE
-            binding.tvImagesUpload.visibility = View.VISIBLE
 
         }
     }
@@ -295,6 +291,24 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         //dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.custome_dialog_bg))
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.findViewById<Button>(R.id.btn_okay).setSafeOnClickListener {
+
+
+            binding.tvIssueTypeDialog.text = ""
+            supportViewModel.selectIssue(IssueDataClass(""))
+            bottomSheetDialogIssueType.updateIssueText(null)
+            supportViewModel.selectPosition(null)
+
+            binding.editTextIssueDescription.text.clear()
+
+            images.clear()
+            imageAdapter.notifyDataSetChanged()
+            customBottomSheetDialog.updateSelectedImageGallery(images)
+            supportViewModel.updateImagesForIssue(images)
+
+            binding.viewForImages.visibility = View.VISIBLE
+            binding.tvImages.visibility = View.VISIBLE
+            binding.tvImagesUpload.visibility = View.VISIBLE
+
             dialog.dismiss()
         }
         dialog.setCancelable(false)

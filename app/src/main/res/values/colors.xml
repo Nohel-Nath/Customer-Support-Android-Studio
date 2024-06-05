@@ -8,4 +8,10 @@
     <color name="black_edit_text_night">#272727</color>
     <color name="gray_edit_text_day">#F1F1F1</color>
     <color name="colorEnabled">#00C806</color>
+    <color name="colorBlackDialog">#1E1EBF</color>
+    <color name="colorAddMore">#FFFFFF</color>
+    <color name="reviewBgDay">#80090909</color>
+    <color name="reviewTxtDay">#80FFFFFF</color>
+    <color name="reviewBgNight">#FFFFFF</color>
+    <color name="reviewTxtNight">#090909</color>
 </resources>
