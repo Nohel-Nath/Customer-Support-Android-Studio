@@ -79,7 +79,6 @@ class AlbumAdapter(
     }
 
     private fun fetchMostRecentImageForAlbum(context: Context, albumName: String): String? {
-
         val projection = arrayOf(
             MediaStore.Images.Media.DATA
         )

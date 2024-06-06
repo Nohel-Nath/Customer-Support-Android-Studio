@@ -105,7 +105,9 @@ class BottomSheetDialogIssueType(
         this.issueText=null
         selectedPosition = null
         if (::adapter.isInitialized){
-            adapter.notifyDataSetChanged()
+            selectedPosition?.let {
+                adapter.notifyItemChanged(it)
+            }
         }
         if(::binding.isInitialized) {
             updateButtonColor(null)

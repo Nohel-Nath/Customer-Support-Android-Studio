@@ -179,7 +179,8 @@ class GalleryAdapter(
         Log.d("selected Images",selectedImages.size.toString())
         this.selectedImages.clear()
         this.selectedImages.addAll(selectedImages)
-        notifyDataSetChanged()
+        //notifyDataSetChanged()
+        notifyItemRangeChanged(0, itemCount)
     }
 
 }

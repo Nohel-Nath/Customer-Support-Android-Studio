@@ -167,7 +167,24 @@ class BottomSheetDialogGallery(private val context: Context) {
                 images.clear()
                 images.addAll(galleryHelper.loadImages(selectedAlbum))
                 galleryViewModel.updateImages(images)
-                adapter.notifyDataSetChanged()
+                // Find the position of the selected album
+                val position = albumsList.indexOfFirst { it.albumName == selectedAlbum }
+                Log.d(TAG, "Position of Album is: $position")
+                if (position != -1) {
+                    adapter.notifyItemChanged(position)
+                }
+//                if (position != -1) {
+//                    val newList= albumsList.toMutableList()
+//                    // Remove the item
+//                    val removedAlbum = newList.removeAt(position)
+//                    // Add the item back to the beginning of the list
+//                    newList.add(0, removedAlbum)
+//                    // Notify the adapter about the changes
+//                    adapter.notifyItemRemoved(position)
+//                    adapter.notifyItemInserted(0)
+//                    adapter.notifyItemRangeInserted(0, position)
+//                }
+                //adapter.notifyDataSetChanged()
                 binding.tvAlbumName.text = selectedAlbum
                 adapter.updateAlbumSelection(selectedAlbum)
                 binding.galleryRecycler.scrollToPosition(0)

@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     private val images = mutableListOf<ImageSelectionDataClass>()
     private var currentPermissionIndex = 0
 
-
     private val storagePermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         Manifest.permission.READ_MEDIA_IMAGES
     } else {
@@ -89,18 +88,17 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
     }
 
     private fun observeViewModel() {
-        supportViewModel.selectedIssue.observe(this, Observer { issue ->
+        supportViewModel.selectedIssue.observe(this) { issue ->
             updateTextView(issue?.issueType)
-        })
-        supportViewModel.imageSelectedIssue.observe(this, Observer { image ->
+        }
+        supportViewModel.imageSelectedIssue.observe(this) { image ->
             imageAdapter.updateImages(image)
             customBottomSheetDialog.updateSelectedImageGallery(image)
             updateUiVisibility(image)
-        })
+        }
     }
 
     private fun bottomSheetDialogIssueInitialize() {
-        //bottomSheetDialogIssueType = BottomSheetDialogIssueType(this, supportViewModel)
         bottomSheetDialogIssueType = BottomSheetDialogIssueType(this, supportViewModel.selectedPosition.value) { (issueText, position) ->
             supportViewModel.selectIssue(issueText?.let { IssueDataClass(it) })
             supportViewModel.selectPosition(position)
@@ -112,13 +110,10 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
 
     fun updateTextView(issueText: String?) {
         binding.tvIssueTypeDialog.text = issueText ?: ""
-
         //Log.d("test for some field", "$issueText")
         if (issueText?.isNotEmpty() == true) {
             binding.tvErrorIssueType.visibility = View.GONE
         } else {
-//            supportViewModel.updateIssue(null)
-//            supportViewModel.selectIssue(null)
             supportViewModel.selectIssue(IssueDataClass("Select Issue Type"))
             supportViewModel.selectPosition(null)
             binding.tvErrorIssueType.visibility = View.VISIBLE
@@ -176,7 +171,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         binding.rvImage.addItemDecoration(HorizontalSpaceItemDecoration(spacingInPixels))
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun sendInput(imagePaths: List<String>) {
         if (imagePaths.isNotEmpty()) {
             val newImages = imagePaths.map {
@@ -273,11 +267,7 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         }
 
         if (issueType.isNotEmpty() && issueDescription.isNotEmpty() && imagesAttached) {
-
             showCustomDialog()
-
-
-
         }
     }
 
@@ -291,8 +281,6 @@ class MainActivity : AppCompatActivity(), BottomSheetDialogGallery.OnInputListen
         //dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.custome_dialog_bg))
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.findViewById<Button>(R.id.btn_okay).setSafeOnClickListener {
-
-
             binding.tvIssueTypeDialog.text = ""
             supportViewModel.selectIssue(IssueDataClass(""))
             bottomSheetDialogIssueType.updateIssueText(null)

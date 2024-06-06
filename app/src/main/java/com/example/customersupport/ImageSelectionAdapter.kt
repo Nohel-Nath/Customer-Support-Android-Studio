@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 
 class ImageSelectionAdapter(
-    private val viewModel: SupportViewModel,
+    private val imageSelectionViewModel: SupportViewModel,
     private val images: MutableList<ImageSelectionDataClass>,
     private val itemClickListener: ImageSelectionAdapter.OnItemClickListener,
 ) :
@@ -92,7 +92,6 @@ class ImageSelectionAdapter(
         }
     }
     /////////////////////////////////////////////////////////
-
     private fun removeImage(position: Int) {
         if (position >= 0 && position < images.size) {
             images.removeAt(position)
@@ -102,11 +101,10 @@ class ImageSelectionAdapter(
                 itemClickListener.changeUi()
             }
             itemClickListener.updatedImg(images)
-            viewModel.removeImage(position)
+            imageSelectionViewModel.removeImage(position)
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateImages(newImages: List<ImageSelectionDataClass>) {
         val diffCallback = object : DiffUtil.Callback() {
             override fun getOldListSize(): Int = images.size
